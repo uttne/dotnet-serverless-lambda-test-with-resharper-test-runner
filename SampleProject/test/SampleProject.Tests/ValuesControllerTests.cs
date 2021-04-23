@@ -12,7 +12,8 @@ namespace SampleProject.Tests
         [Fact]
         public async Task TestGet()
         {
-            var lambdaFunction = new LambdaEntryPoint();
+            // テストメソッドのスコープを外れたタイミングで Dispose して Host を解放する
+            using var lambdaFunction = new LambdaEntryPoint();
 
             var requestStr = File.ReadAllText("./SampleRequests/ValuesController-Get.json");
             var request = JsonConvert.DeserializeObject<APIGatewayProxyRequest>(requestStr);
